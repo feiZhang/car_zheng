@@ -13,6 +13,7 @@ class CustomerModel extends DxExtCommonModel{
 				'name' => 'real_name',
 				'title' => '真实姓名',
 				'frozen' => true,
+				'hide' => 7,
 		),
 		array (
 				'name' => 'card_no',

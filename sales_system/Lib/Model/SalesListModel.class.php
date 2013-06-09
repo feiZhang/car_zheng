@@ -8,7 +8,7 @@ class SalesListModel extends DxExtCommonModel{
 				'name' => 'brokerage_user_name','title' => '提成人','frozen' => true,
 		),
 		array (
-				'name' => 'customer_name','title' => '客户','frozen' => true,
+				'name' => 'customer_name','title' => '客户车牌号','frozen' => true,
 		),
 		array (
 				'name' => 'id','title' => '操作','frozen'=>true,'pk' => true,'hide'=>7,
@@ -59,6 +59,6 @@ class SalesListModel extends DxExtCommonModel{
 		),
 	);
 	protected $modelInfo = array (
-		'title' => '销售记录','readOnly'=>true,
+		'title' => '销售记录','readOnly'=>true,'order'=>'id desc',
 	);
 }
