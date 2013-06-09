@@ -1,0 +1,35 @@
+@charset "utf-8";
+.menu {
+    float: right;
+    left: 5px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+    position: absolute;
+    top: 27px;
+}
+
+#container {
+	width:170px;
+}
+H1 {
+	font-size:12px;
+	width:170px;
+	cursor: pointer;
+	background:url(../images/left_menu_bg.png) repeat-x;
+}
+H1 a {
+	display: block;
+	width:140px;
+	padding-left:25px;
+	height:27px;
+	color:#0558a7;
+	background:url(../images/left_menu_icon.png) no-repeat 5px center;
+	line-height:27px;
+	text-align:left;
+}
+.content{
+	width:170px;
+	background:#ffffff;
+	
+}

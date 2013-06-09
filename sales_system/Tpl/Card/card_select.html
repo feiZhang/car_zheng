@@ -1,0 +1,116 @@
+<script type="text/javascript">
+<!--
+    $(function() {
+        //如果是消费商品，则直接显示商品信息，不需要等待卡加载完后显示商品信息，消费支持无卡消费
+        if ($("#card_info_type").text() == "sale") {
+        	$("#commodityList").html('等待加载商品信息!<img src="__PUBLIC__/public/loading.gif" />');
+            $.get("__ROOT__/Commodity/sale_itemlist", function(html) {
+                $("#commodityList").html(html);
+                //将按次消费的商品移除。。在充值的时候移除按元的数据。
+                $(".commodity_times").each(function(i) {
+                    $(this).remove();
+                });
+                $.dialog.get('select_card_info').position();
+            });
+        }
+        //提示输入卡的密码，如果没密码，则留空
+        function inputPass() {
+        	//alert($("input[type='radio'][name='customer_id']:checked").attr("alt"));
+            $.dialog.prompt('请输入密码:',
+                    function(tPasswd) {
+                        $.get("__ROOT__/Card/card_info/i/" + $("input[type='radio'][name='customer_id']:checked").val() + "/pass/" + tPasswd,
+                            function(msg) {
+                                if ($.dialog.get('select_customer_id'))
+                                    $.dialog.get('select_customer_id').close();
+                                $("#customer_list").html(msg.data);
+                                $("#customer_list").show();
+                                afterLoadCard(msg.status);
+                            },"json"
+                        );
+                    }, "", "password");
+        }
+        //加载好卡号信息后，触发的事件，
+        function afterLoadCard(haveCard){
+            if(haveCard){
+                //如果是充值，则显示可冲次数的商品信息，如果
+                if ($("#card_info_type").text() == "topup") {
+                    $.get("__ROOT__/Commodity/sale_itemlist/type/topup",function(html){
+                        $("#commodityList").html("卡充值<input name='topupMoney' type='text' class='span1'>元送<input name='giftMoney' type='text' class='span1'>元");
+                        $("#commodityList").append(html);
+                        $(".commodity_price").each(function(i){
+                            $(this).remove();
+                        });
+                        $("#coustomerHasTimesCard .inputTimes").remove();
+                    });
+                }else if ($("#card_info_type").text() == "sale") {
+                    $("#coustomerHasTimesCard input").keyup(function(){
+                        if(this.value > Number($(this).attr("max"))){
+                            $(this).val($(this).attr("max"));
+                        }
+                    });
+                }else if ($("#card_info_type").text() == "save_commodity") {
+                	
+                }
+            }else{
+            	if ($("#card_info_type").text() == "topup") {
+            	    $.dialog.get("select_card_info").button({id:'ok',disabled:true});
+            		$.dialog.get("select_card_info").time(3000);
+            	}
+            }
+            $.dialog.get('select_card_info').position();
+        }
+        
+        //如果，只有一个卡，则直接输入密码，如果有多个卡，则选择一个卡
+        if ($("#customer_list input").length == 1) {
+            inputPass();
+        } else if ($("#customer_list input").length==0) {
+            $("#customer_list").html("卡信息不存在！");
+            $("#customer_list").show();
+        	afterLoadCard(false);
+        } else {
+            $.dialog({
+                id : "select_customer_id",
+                esc : true,
+                title : "选择要使用的卡",
+                lock : true,
+                content : $("#customer_list").html(),
+                okValue : "确定",
+                ok : function() {
+                    inputPass();
+                    return false;
+                },
+                cancelValue : "取消",
+                cancel : function() {
+                    $("#customer_list").html("未选定客户卡！");
+                    $("#customer_list").show();
+                    afterLoadCard(false);
+                },
+                initialize : function() {
+                    $("input[type='radio'][name='customer_id']").live("click", inputPass);
+                }
+            });
+        }
+    });
+//-->
+</script>
+
+<form id="saleCommodityForm" class="form-inline">
+<div id="cardInfo">
+
+		<div id="card_info_type" style="display: none">{$Think.request.type}</div>
+		<div id="customer_list" style="display: none">
+			<foreach name="customerList" item="card">
+                <input type="radio" name="customer_id" value="{$card.pkid}" alt="<notempty name='card:passwd'>1</notempty>" checked />{$card.content}<br />
+			</foreach>
+		</div>
+		
+</div>
+
+<div id="commodityList">
+</div>
+<div id="descriptInfo" style="display:none">
+备注：
+<textarea rows="2" cols="30" name="descirpt" placeholder="请输入备注信息!">
+</textarea>
+</div>
+</form>

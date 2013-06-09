@@ -1,0 +1,28 @@
+<form id="saleCardForm">
+	<table>
+		<tr>
+			<td>卡号:</td>
+			<td><input class="macInput" name="card_no" id="input_card_no" value="{$card_no}"/ >*</td>
+		</tr>
+		<tr>
+			<td>密码:</td>
+			<td><input type="password" class="macInput" name="passwd" value=""/ ></td>
+		</tr>
+		<tr>
+			<td>客户姓名:</td>
+			<td><input class="macInput" name="real_name" value="{$customer.real_name}"/ ></td>
+		</tr>
+		<tr>
+			<td>手机号:</td>
+			<td><input class="macInput" name="tel" value="{$customer.tel}"/ ></td>
+		</tr>
+		<tr>
+			<td>车牌号:</td>
+			<td><input class="macInput" name="car_no" value="<empty name="customer.car_no">豫A<else />{$customer.car_no}</empty>"/ >多个车牌号以,号分割</td>
+		</tr>
+		<tr>
+			<td>描述:</td>
+			<td><input class="macInput" name="descript" value="{$customer.descript}"/ ></td>
+		</tr>
+	</table>
+</form>

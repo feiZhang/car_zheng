@@ -1,0 +1,8 @@
+/*new css*/
+.field_required{ margin-left:5px; color:#EE0101;}
+.itemAddTr{ height:30px;}
+.itemAddInput{ height:22px;}
+.itemAddInput,.itemAddText{border: 1px solid #DCDCDC; border-radius: 3px 3px 3px 3px; color: #333333; font-size: 12px;line-height:22px; outline: medium none; padding:0 3px;}
+.itemAddRadio{vertical-align: middle;}
+.itemAddInput:hover, .itemAddInput:focus, .itemAddText:hover, .itemAddText:focus {border-color: #7DBDE2; box-shadow: 0 0 5px #7DBDE2;}
+.itemAddTr:hover,.itemAddTr:focus{background-color: #D4E8FC; border: 1px solid #D4E8FC;}

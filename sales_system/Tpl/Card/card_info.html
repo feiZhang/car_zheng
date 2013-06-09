@@ -1,0 +1,79 @@
+<link href="__PUBLIC__/public/dataOpe/dataOpe.css" rel="stylesheet" type="text/css" />
+
+<div>
+    卡号:{$customer.card_no}
+    <notempty name="customer:real_name">|客户姓名:{$customer.real_name}</notempty>
+    <notempty name="customer:tel">|手机号:{$customer.tel}</notempty>
+    |状态:{$customer.status}
+</div>
+<div>
+    卡余额:{$customer.remaining_money}元|开卡时间:{$customer.create_time} <input type="hidden" value="{$customer.id}" name="customer_id" />
+</div>
+
+<notempty name="timesCardList">
+<div id="coustomerHasTimesCard">
+    <table class="table table-bordered">
+        <tr>
+            <th>商品</th>
+            <th>剩余次数</th>
+            <th>总次数</th>
+            <th>消费数</th>
+        </tr>
+        <foreach name="timesCardList" item="card">
+        <tr>
+            <td>{$card.title}</td>
+            <td>{$card.remaining_times}</td>
+            <td>{$card.count_times}</td>
+            <td>
+                <input type="text" class="inputTimes saleTimesCard" value="0" itemTitle="{$card.title}" max="{$card.remaining_times}" name="xiaoFeiTimes[{$card.commodity_id}]" /> 
+                <input type="hidden" class="inputTimes macInput" value="{$card.title}" name="xiaoFeiItems[{$card.commodity_id}]" />
+            </td>
+        </tr>
+        </foreach>
+    </table>
+</div>
+</notempty>
+
+
+<notempty name="customerSavedCommodity">
+<script type="text/javascript">
+<!--
+$(function(){
+    $("#customerSavedCommodity input[type='checkbox']").live("change",function(i){
+    	if($(this).attr("checked")){
+    		$.get("__ROOT__/CustomerSavedCommodity/save/id/" + $(this).val() + "/status/1")
+    	}else{
+    		$.get("__ROOT__/CustomerSavedCommodity/save/id/" + $(this).val() + "/status/0")
+    	}
+    });
+})
+//-->
+</script>
+<div id="customerSavedCommodity" style="margin-top:3px">
+    <table class="table table-bordered">
+        <?php
+        $lastComm   = $customerSavedCommodity[0]["commodity_id"];
+        $length     = sizeof($customerSavedCommodity);
+        for($i=0;$i<$length;){
+            $cscTitle   = $customerSavedCommodity[$i]["commodity_title"];
+            $cscList    = "";
+            while($lastComm == $customerSavedCommodity[$i]["commodity_id"] && $i<$length){
+                $cscList    .= sprintf("<input type='checkbox' value='%d' name='commodity[%d]' %s />%s",$customerSavedCommodity[$i]["id"],$customerSavedCommodity[$i]["commodity_id"],$customerSavedCommodity[$i]["status"]==1?"checked":"",$customerSavedCommodity[$i]["descript"]);
+                ++$i;
+            }
+            $lastComm   = $customerSavedCommodity[$i]["commodity_id"];
+            printf("<tr>");
+            printf("<td style='text-align:right'>%s:</td>",$cscTitle);
+            printf("<td>%s</td>",$cscList);
+            printf("</tr>");
+        }
+        ?>
+    </table>
+</div>
+</notempty>
+
+
+<div id="showExpenditureList">
+	<a href="__APP__/UserBuyCommodity/index/customer_id/{$customer.id}" target="showUserBuyCommodity">显示消费消费列表</a>
+</div>
+<div id="expenditureList" style="display: none"></div>

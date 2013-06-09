@@ -1,0 +1,45 @@
+
+<table style="width:450px" class="table table-bordered table-condensed">
+	<tr>
+		<th>选择</th>
+		<th>商品名称</th>
+		<th>销售数量</th>
+		<th>提成人</th>
+	</tr>
+<?php
+foreach($itemList as $item){ 
+?>
+	<tr>
+		<td>
+		<input type="checkbox" value="<?php echo $item["id"];?>" name="selectItem[]" />
+		</td>
+		<td>
+			<?php echo $item["title"];?>
+			<input type="hidden" value="<?php echo $item["title"];?>" name="commodity_title<?php echo $item["id"];?>" />
+		</td>
+		<td>
+			<?php
+			//在这里按次销售和按价格销售输入框都绘制，具体操作页面根据实际情况，remove不需要的元素
+			printf('<span class="commodity_times"><input type="text" class="span2 input-append" name="times%d" value="">次</span>',$item["id"]);
+			printf('<span class="commodity_price"><input type="text" class="span2 input-append" name="money%d" value="%.2f">元</span>',$item["id"],$item["price"]);
+			printf('<input type="hidden" name="brokerage_type%d" value="%s">',$item["id"],$item["brokerage_type"]);
+			printf('<input type="hidden" name="brokerage_basic_value%d" value="%.2f">',$item["id"],$item["brokerage_basic_value"]);
+			?>
+		</td>
+		<td>
+			<?php
+			if(!empty($item["brokerage_user"])){
+				$salesUser	= json_decode($item["brokerage_user"]);
+				printf("<select class='span1' name='sale_user%d'>",$item["id"]);
+				foreach($salesUser as $user){
+					printf("<option value='%s'>%s</option>",$user[0],$user[1]);
+				}
+				printf("</select>");
+			}
+			?>
+		</td>
+	</tr>
+<?php
+}
+?>
+</table>

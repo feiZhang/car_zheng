@@ -1,0 +1,13 @@
+/*new css*/
+.field_required{ margin-left:5px; color:#EE0101;}
+.itemAddTr{ height:30px;}
+.itemAddInput{ height:22px;}
+.itemAddInput,.itemAddText{border: 1px solid #DCDCDC; border-radius: 3px 3px 3px 3px; color: #333333; font-size:12px;line-height:22px; outline: medium none; padding:0 3px;}
+.itemAddRadio{vertical-align:middle;}
+.itemAddInput:hover, .itemAddInput:focus, .itemAddText:hover, .itemAddText:focus {border-color: #7DBDE2; box-shadow: 0 0 5px #7DBDE2;}
+.itemAddTr:hover,.itemAddTr:focus{background-color: #D4E8FC;}/*鼠标获取焦点时背景为蓝色*/
+.itemAddTr:hover,.itemAddTr:focus{background-color: #f8f8f8;}/*鼠标获取焦点时背景为灰色*/
+
+.itemAddTable{border:0; background:#CCC;}/*不要边框的话把这句去掉就可以,改变background颜色值就是改变边框的颜色*/
+.itemAddTable td{padding:2px 5px;}
+.itemAddTr{background:#FFF;}

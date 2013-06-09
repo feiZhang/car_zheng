@@ -1,0 +1,67 @@
+.box, .box > .top-corners, .box > .bottom-corners{
+    background-attachment: scroll;
+    background-clip: border-box;
+    background-color: #FFFFFF;
+    background-image: url("apple/box-sprite.png");
+    background-origin: padding-box;
+    background-position: 0 0;
+    background-repeat: repeat-y;
+    background-size: 6000px 240px;
+}
+
+.quick_operate {
+    background-position: -4359px 0;
+    padding: 7px;
+}
+
+.qucik_sale{
+	width : 330px;
+	border: 1px solid #CDCDCD;
+	padding: 5px;
+}
+
+.box {
+    clear: both;
+    margin-bottom: 8px;
+    position: relative;
+}
+
+.title-bar {
+    background-color: #224272;
+    background-position: -340px -12px;
+    color: #FFFFFF;
+}
+
+.clearfix:after {
+    clear: both;
+    content: ".";
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.box > .box-content {
+    border-top: 1px solid #FFFFFF;
+    margin: 0 1px 1px;
+}
+
+.box > .top-corners {
+    background-position: -1776px 0;
+    top: 0;
+}
+
+.box > .bottom-corners {
+    background-position: -1776px -121px;
+    bottom: 0;
+}
+
+.box > .top-corners,.box > .bottom-corners {
+    width: 980px;
+}
+
+.box > .top-corners, .box > .bottom-corners {
+    background-color: transparent;
+    background-repeat: no-repeat;
+    height: 5px;
+    left: 0;
+    position: absolute;
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>{$Think.config.SysSet.SITE_TITLE}</title>
+        <link href="__PUBLIC__/basic/css/login.css" rel="stylesheet" type="text/css" />
+	    <script type="text/javascript" src="__PUBLIC__/public/Jquery/jquery-1.7.2.min.js" ></script>
+        <script type="text/javascript">
+            function fleshVerify(){
+                //重载验证码
+                var timenow = new Date().getTime();
+                document.getElementById('verifyImg').src= '__URL__/verify/'+timenow;
+            }
+            
+            (function($){
+                $(function(){
+                    /*输入框获得焦点后和其他输入框样式区别显示*/
+                    $('input[type="text"],input[type="password"],textarea,select').live('focus', function(){
+                        $(this).addClass("log-input0");
+                    }).live('blur', function(){
+                        $(this).removeClass("log-input0");
+                    });
+                    /*页面的第一个输入框默认获取焦点，用于提高操作效率*/
+                    $('input:first[type=\"text\"]').focus();
+                    /*输入框如果输入回车，自动转换为tab*/
+                    $("form").submit(function(){
+                    	if($("input#username").val()==""){
+                            $("input#username").focus();
+                            return false;
+                    	}
+                    	if($("input#password").val()==""){
+                    		$("input#password").focus();
+                    		return false;
+                    	}
+                        if($("input#seccode").val()==""){
+                        	$("input#seccode").focus();
+                        	return false;
+                        }
+                    });
+                });
+            })(jQuery);
+        </script>
+    </head>
+    <body>
+        <div class="login-top">
+            <div class="login-980">
+                <div class="login-left">{$Think.config.SysSet.SITE_NAME}</div>
+                <div class="login-right">今天是:<span>{$serverDate}&nbsp;&nbsp; {$week}</span> &nbsp;&nbsp;您的IP:<span>{$clientIp}</span></div>
+            </div>
+        </div>
+        <!--center start-->
+        <div class="login-center">
+            <div class="login-cen9">
+                <div class="login-cenleft"></div>
+                <div class="login-cenright">
+                    <form action="__URL__/checkLogin" method="post" >
+                        <table width="99%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                                <td height="25" width="30%">&nbsp;</td>
+                                <td width="70%">&nbsp;</td>
+                            </tr>
+                            <tr>
+                                <td height="45" align="right" valign="middle"><label for="username">用户名：</label></td>
+                                <td>
+                                    <input class="log-input" type="text" name="username" id="username" onFocus="this.className='log-input0'" onBlur="this.className='log-input'" value="<empty name='username'>{$Think.config.TEST_USERNAME}<else />{$username}</empty>" placeholder="请输入用户名" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="45" align="right" valign="middle"><label for="password">密 码：</label></td>
+                                <td>
+                                    <input class="log-input" type="password" name="password" id="password" onFocus="this.className='log-input0'" onBlur="this.className='log-input'" value="{$Think.config.TEST_USERPASS}" placeholder="请输入密码" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="45" align="right" valign="middle"><label for="seccode">验证码：</label></td>
+                                <td>
+                                    <input class="log-input01" type="text" name="seccode" id="seccode" onFocus="this.className='log-input02'" onBlur="this.className='log-input01'" value="{$Think.config.TEST_USERVERIFY}" placeholder="请输入验证码" />
+                                    &nbsp;
+                                    <a HREF="javascript:fleshVerify()"><IMG SRC="__URL__/verify/" name="verifyImg" BORDER="0" align="absmiddle" id="verifyImg" width="70" height="27" title="如果您无法识别验证码，请点图片更换"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" align="center">
+                                    <input type="checkbox" name="saveMyAccount" value="save" />保持登录状态,<br \>请不要在网吧或公用电脑上使用此功能!
+                                </td>
+                            </tr>
+                            <tr>
+                                <td height="60" colspan="2" align="center">
+                                    <input type="submit" class="log-button" name="button" id="login-button" value="登 录" />
+                                    &nbsp;
+                                    <input type="reset" class="log-button01" name="button-reset" id="reset-button" value="重 置" />
+                                    <?php
+                                    $enableRegiste  = C("SysSet.EnableRegiste"); 
+                                    if($enableRegiste=="是"){?>
+                                    &nbsp;
+                                    <input type="button" class="log-button" name="button-registe" id="button-registe" value="注 册" onclick="javascript:document.location.href='__ROOT__/Registe';" />
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--center end-->
+            <script>
+            $(function(){
+                if($.browser.msie && ($.browser.version=="6.0" || $.browser.version=="7.0")){
+                	var firefox    = '<a href="http://firefox.com.cn/" target="firefox">FireFox</a>';
+                	var chrome     = '<a href="http://www.google.cn/intl/zh-CN/chrome/browser/" target="chrome">Chrome</a>';
+                	var ie         = '<a href="http://windows.microsoft.com/zh-CN/internet-explorer/downloads/ie" target="IE">IE8</a>';
+                	var osVersion  = navigator.userAgent.split(";")[2];
+                	var osV        = osVersion.substr(osVersion.length-3,1);
+                	switch(osV)
+                	{
+                	case "5":
+                		ie         = '<a href="http://windows.microsoft.com/zh-CN/internet-explorer/downloads/ie" target="IE">IE8</a>';
+                		break;
+                	default:
+                		ie         = '<a href="http://windows.microsoft.com/zh-CN/internet-explorer/downloads/ie" target="IE">IE9</a>';
+                		break;
+                	} 
+                    $("#ie6Message").html('您现在使用的是IE6\\IE7浏览器，无法体验最新的Web功能，请您使用' + ie + '或更高版本浏览器，获取更好用户体验').show();
+                }
+            });
+            </script>
+        <div class="login-footer">
+            <div id="ie6Message" style="display:none;color:red">
+                 
+            </div>
+            <br/><br />
+            {$Think.config.SysSet.SITE_COPYRIGHT}
+        </div>
+    </body>
+</html>

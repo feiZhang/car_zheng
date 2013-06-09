@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{$Think.config.SysSet.SITE_TITLE}</title>
+<script type="text/javascript" charset="utf-8">
+    var APP_ROOT = "__ROOT__";
+    var PUBLIC = "__PUBLIC__";
+    var SITE_ROOT   = '__ROOT__';
+</script>
+<link href="__PUBLIC__/css/common.css" rel="stylesheet" type="text/css" />
+<link href="__PUBLIC__/css/apple.css" rel="stylesheet" type="text/css" />
+
+<link href="__PUBLIC__/public/artDialog5.0/skins/default.css" rel="stylesheet" />
+
+<eq name="Think.config.APP_DEBUG" value="true">
+<script src="__PUBLIC__/public/Jquery/jquery-1.7.2.js"></script>
+<script src="__PUBLIC__/public/artDialog5.0/source/jquery.artDialog.js"></script>
+<script src="__PUBLIC__/public/date.js"></script>
+<script src="__PUBLIC__/public/underscore-1.3.1.js"></script>
+<script src="__PUBLIC__/public/backbone.js"></script>
+<else/>
+<script src="__PUBLIC__/public/Jquery/jquery-1.7.2.min.js"></script>
+<script src="__PUBLIC__/public/artDialog5.0/jquery.artDialog.min.js"></script>
+<script src="__PUBLIC__/public/date.min.js"></script>
+<script src="__PUBLIC__/public/underscore-min.js"></script>
+<script src="__PUBLIC__/public/backbone-min.js"></script>
+</eq>
+<script type="text/javascript">
+<!--
+
+-->
+</script>
+<script src="__PUBLIC__/js/common.js"></script>
+</head>
+<body>
+<!-- 图标帮助结束 -->
+<div class="contentBody">
+    <div id='headWrap'>
+        <h1 id="logo">
+    		<a href="__ROOT__/">{$Think.config.SysSet.SITE_SMALL_NAME}</a>
+        </h1>
+        <div class="topMenu">
+        	<span><a href='__ROOT__/'>首页</a></span>
+            <span><a href='__ROOT__/Customer'>客户管理</a></span>
+            <span><a href='__ROOT__/User'>员工管理</a></span>
+            <span><a href='__ROOT__/Commodity'>商品管理</a></span>
+            <span><a href="__ROOT__/SalesList">销售详情</a></span>
+            <span><a href="__ROOT__/CustomerSavedCommodity">商品寄存</a></span>
+            <!-- 
+            <span><a href="__ROOT__/RequestLeave">员工请假</a></span>
+            <span><a href="__ROOT__/Wages">工资条</a></span>
+             -->
+            <span><?php echo $_SESSION["userInfo"]["nick_name"];?></span>
+            <span><a href="__ROOT__/Help">帮助</a></span>
+            <?php
+            if(empty($_SESSION[C("USER_AUTH_KEY")])){
+                printf('<span><a href="__ROOT__/Home/showme">登录</a></span>');
+            }else{
+                $m    = C("USER_AUTH_MODEL");
+                printf('<span><a href="__ROOT__/Home/logout">退出%s</a></span>',$_SESSION[$m["nick_name"]]);
+            }
+            ?>
+        </div>
+    </div>
