@@ -1,0 +1,9 @@
+@charset "utf-8";
+span.field_required{
+    color:red;
+}
+
+/* bootstrap 的 select默认太宽了 */
+select.autowidth{
+    width:auto;
+}

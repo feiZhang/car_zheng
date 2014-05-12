@@ -27,10 +27,6 @@ CREATE TABLE IF NOT EXISTS `account` (
 ) ENGINE=MyISAM COMMENT='登录账户表';
  * **/
 class PublicAction extends DxExtPublicAction {
-	public function mm(){
-		echo authcode("zzy789","ENCODE");
-		die("111");
-	}
 	protected function setSession($user){
 		session(C('USER_AUTH_KEY'), $user['id']);
 		session('login_name', $user['login_username']);
@@ -51,7 +47,7 @@ class PublicAction extends DxExtPublicAction {
         }
 
 		$data['id']	    			= $user['id'];
-		$data['last_login_time']	= getMySqlNow();
+		$data['last_login_time']	= DxFunction::getMySqlNow();
 		$data['login_count']	    = array('exp','login_count+1');
 		$data['last_login_ip']	    = $_SERVER["REMOTE_ADDR"];
 		if(!empty($user["save_account"])){

@@ -1,0 +1,83 @@
+<eq name="Think.CONFIG.HAS_HEADER" value='true'>
+	<include file="Public:header_home"/>
+	<else/>
+	<include file="Public:header" />
+</eq>
+<link href="__ROOT__/min/g=dataListCss" rel="stylesheet" type="text/css" />
+<script src="__DXPUBLIC__/public/DatePicker/WdatePicker.js" type="text/javascript"></script>
+<div>
+	<input id="modelInfo_editTitle" value="{$modelInfo.editTitle}" type="hidden" />
+  <table id="gridHeader" style="display:none">{$modelInfo['gridHeader']}</table>
+  <notempty name="modelInfo.modelTitle">
+  <div id="header_title" class="navbar" style="margin-bottom:0px">
+    <div class="navbar-inner">
+      <a href="#" class="brand">{$modelInfo.modelTitle}</a>
+
+    <?php
+    if(!empty($modelInfo["searchHTML"])){
+    ?>
+		<form id="search">
+			<div style="min-height: 30px;">
+				<div>
+					<div id='query_items' style="">
+            <?php
+            if(!empty($modelInfo["searchHTML"])){
+              print($modelInfo["searchHTML"]);
+            }
+            ?>
+					</div>
+				</div>
+			</div>
+		</form>
+    <?php
+    }
+    ?>
+
+      <?php if (!$modelInfo["readOnly"]) { ?>
+      <input class="btn pull-right" id='item_add' onclick="javascript:dataOpeAdd('{\\$InitSearchPara}','{$modelInfo['addTitle']}');" type="button" value="{$modelInfo['addTitle']}" />
+      <?php }
+      if(!empty($modelInfo["otherManageAction"])){
+        print($modelInfo["otherManageAction"]);
+      }
+      ?>
+    </div>
+  </div>
+  </notempty>
+  <div id="dataListCon" class="cen_pg">
+		<div id="dataList"></div>
+		<div id="grid-help-info">
+			{$modelInfo["helpInfo"]}
+		</div>
+  </div>
+</div>
+
+<script src="__DXPUBLIC__/public/sigma_grid/gt_grid_all.js" type="text/javascript"></script>
+
+<!--
+<eq name="Think.config.APP_DEBUG" value="true">
+	<script src="__PUBLIC__/public/sigma_grid/src/gt_base.js" type="text/javascript"></script>
+	<script src="__PUBLIC__/public/sigma_grid/src/gt_tool.js" type="text/javascript"></script>
+</eq>
+ -->
+ 
+<script type="text/javascript" src="__ROOT__/min/g=dataListJs"></script>
+<script type="text/javascript" src="__DXPUBLIC__/basic/js/DataOpe.js"></script>
+
+<script>
+var dxGrid  = null;
+$(function(){
+	dxGrid	= new $.dxGrid();
+	var gridFields        = {$gridFields};
+	var datasetFields     = {$datasetFields};
+	dxGrid.init({ "gridDiv":"dataList",",loadUrl":"","gridFields":gridFields,"datasetFields":datasetFields,"parentGridDiv":"dataListCon","enablePage":"{$modelInfo['enablePage']}"});
+	dxGrid.setBaseURL("__URL__");
+	dxGrid.setData(dxGrid.urladd("__URL__/get_datalist","{\\$InitSearchPara}"));
+	<notempty name="ignoreInitSearch">
+	dxGrid.setOrginURL("__URL__/get_datalist");
+	</notempty>
+	dxGrid.showGrid(['header_title','data_add','grid-help-info',<?php echo intval(C("DATAOPE_LIST_HEIGHT"));?>]);
+});
+</script>
+
+
+<include file="Public:footer" />

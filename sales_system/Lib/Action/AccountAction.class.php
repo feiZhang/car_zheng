@@ -25,5 +25,3 @@ class AccountAction extends DataOpeAction {
     }
 
 }
-
-?>

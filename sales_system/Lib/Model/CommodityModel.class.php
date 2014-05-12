@@ -8,8 +8,7 @@ class CommodityModel extends DxExtCommonModel{
 									var v	= '<a href=\"javascript:dataOpeEdit(' + value + ');\">修改</a>';
 									v	+= ' <a href=\"javascript:dataOpeDelete(' + value + ');\">删除</a>';
 									return v;
-}
-",
+            }",
 				'pk' => true,
 				'hide' => 6,		//self::HIDE_FIELD_ADD + self::HIDE_FIELD_LIST
 		),
@@ -39,19 +38,8 @@ class CommodityModel extends DxExtCommonModel{
 				'title' => '商品属性',
 				'type'	=> "set",
 		),
-		array (
-				'name' 		=> 'brokerage_user',
-				'title' 	=> '提成人员',
-				'type'		=> 'set',
-				'valChange'	=> array("model"=>"User"),
-				'renderer'	=> "var valChange=function valChangeCCCC(value ,record,columnObj,grid,colNo,rowNo){ 
-											var valChangeDatas=eval(value);
-											var v	= '';
-											$(valChangeDatas).each(function(i){
-												v	+= ' '+this[1];
-											});
-											return v;
-										}",
+		'brokerage_user'  => array (
+				'title' 	=> '提成人员','type'		=> 'set','valChange'	=> array("model"=>"User"),
 		),
 		array (
 				'name' => 'brokerage_type',
@@ -63,14 +51,14 @@ class CommodityModel extends DxExtCommonModel{
 				'title' => '提成基础值',
 		), 
 		array (
-				'name' => 'create_time','title' => '创建时间','hide'=>2,
+				'name' => 'create_time','title' => '创建时间','hide'=>6,
 		),
 		array (
-				'name' => 'update_time','title' => '更新时间','hide'=>2,
+				'name' => 'update_time','title' => '更新时间','hide'=>6,
 		),
 		array (
-				'name' => 'status','title' => '状态','hide'=>2,
-		), 
+				'name' => 'status','title' => '状态','hide'=>7,'type'=>'enum',
+		),
 	);
 	protected $modelInfo = array (
 		'title' => '商品','otherManageAction'=>"",

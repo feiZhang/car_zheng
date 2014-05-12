@@ -15,10 +15,26 @@
         }
         //提示输入卡的密码，如果没密码，则留空
         function inputPass() {
-        	//alert($("input[type='radio'][name='customer_id']:checked").attr("alt"));
-            $.dialog.prompt('请输入密码:',
-                    function(tPasswd) {
-                        $.get("__ROOT__/Card/card_info/i/" + $("input[type='radio'][name='customer_id']:checked").val() + "/pass/" + tPasswd,
+          $.dialog({
+            title:"提示",
+            fixed: true,
+            lock: true,
+            content: [
+              '<div style="margin-bottom:5px;font-size:12px">',
+              '请输入密码:',
+              '</div>',
+              '<div>',
+              '<input type="password" class="d-input-text" value="',
+              '" style="width:18em;padding:6px 4px" />',
+              '</div>'
+            ].join(''),
+            initialize: function () {
+              input = this.dom.content.find('.d-input-text')[0];
+              input.select();
+              input.focus();
+            },
+            ok: function () {
+              $.get("__ROOT__/Card/card_info/i/" + $("input[type='radio'][name='customer_id']:checked").val() + "/pass/" + input.value,
                             function(msg) {
                                 if ($.dialog.get('select_customer_id'))
                                     $.dialog.get('select_customer_id').close();
@@ -27,7 +43,14 @@
                                 afterLoadCard(msg.status);
                             },"json"
                         );
-                    }, "", "password");
+            },
+            okValue:"确定",
+            cancel: function () {
+              $("#customer_list").html("<b sytle='color:red'>未输入密码，此时为无卡消费，请注意收取现金！</b>");
+              $("#customer_list").show();
+            },
+            cancelValue:"取消"
+          });
         }
         //加载好卡号信息后，触发的事件，
         function afterLoadCard(haveCard){
@@ -64,7 +87,7 @@
         if ($("#customer_list input").length == 1) {
             inputPass();
         } else if ($("#customer_list input").length==0) {
-            $("#customer_list").html("卡信息不存在！");
+            $("#customer_list").html("卡信息不存在！请客户使用现金消费！");
             $("#customer_list").show();
         	afterLoadCard(false);
         } else {
@@ -100,7 +123,8 @@
 		<div id="card_info_type" style="display: none">{$Think.request.type}</div>
 		<div id="customer_list" style="display: none">
 			<foreach name="customerList" item="card">
-                <input type="radio" name="customer_id" value="{$card.pkid}" alt="<notempty name='card:passwd'>1</notempty>" checked />{$card.content}<br />
+                <input type="radio" name="customer_id" value="{$card.pkid}" alt="<notempty name='card:passwd'>1</notempty>" checked />
+                {$card.content}<br />
 			</foreach>
 		</div>
 		

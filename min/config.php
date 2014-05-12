@@ -42,7 +42,7 @@ $min_errorLogger = false;
  * In 'debug' mode, Minify combines files with no minification and adds comments
  * to indicate line #s of the original files.
  */
-$min_allowDebugFlag = false;
+$min_allowDebugFlag = true;
 
 
 /**
@@ -73,7 +73,6 @@ $min_cachePath = '/tmp';
 //$min_documentRoot = "";
 $min_documentRoot 	= $_SERVER["DOCUMENT_ROOT"]; 
 //$min_documentRoot = $_SERVER['SUBDOMAIN_DOCUMENT_ROOT'];
-$groupBasePath		= substr(__FILE__, 0, -15);
 
 /**
  * Cache file locking. Set to false if filesystem is NFS. On at least one 

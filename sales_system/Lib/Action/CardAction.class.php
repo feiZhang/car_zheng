@@ -67,7 +67,7 @@ class CardAction extends DataOpeAction {
 			$mTopup		= D("UserBuyCommodity");
 			$theCustomer	= $mCustomer->find($_REQUEST["customer_id"]);
 			//记录每次充值的信息
-			$mTopup->add(array("customer_id"=>intval($_REQUEST["customer_id"]),'sales_price'=>$giftMoney,'finish_price'=>$giftMoney+$theCustomer["remaining_money"],'commodity_type'=>'充值赠送','descript'=>$_REQUEST["descript"]."[上次结余:".$theCustomer["remaining_money"].";充值后结余:".($topupMoney+$theCustomer["remaining_money"])."]"));
+			$mTopup->add(array("customer_id"=>intval($_REQUEST["customer_id"]),'sales_price'=>$giftMoney,'finish_price'=>$giftMoney+$theCustomer["remaining_money"],'commodity_type'=>'充值赠送','descript'=>$_REQUEST["descript"]."[上次结余:".$theCustomer["remaining_money"].";赠送后结余:".($giftMoney+$theCustomer["remaining_money"])."]"));
 			//更新总计
 			$mCustomer->save(array("id"=>intval($_REQUEST["customer_id"]),
 					"remaining_money"=>array("exp","remaining_money+".$giftMoney),
@@ -82,8 +82,14 @@ class CardAction extends DataOpeAction {
 	public function card_select(){
 		if(isset($_REQUEST["card_no"])){
 			//先查询输入的数据，对应几个客户，然后列出客户，供前台选择一个使用的客户帐号
-			$customer	= D("FulltextSearch");
-			$custInfo	= $customer->where(array("content"=>array("like","%".$_REQUEST["card_no"]."%"),"object"=>"Customer"))->select();
+			//$customer	= D("FulltextSearch");
+			//$custInfo	= $customer->where(array("content"=>array("like","%".$_REQUEST["card_no"]."%"),"object"=>"Customer"))->select();
+			$customer	= D("Customer");
+			$custInfo	= $customer->where(array("car_no"=>array("like","%".$_REQUEST["card_no"]."%")))->select();
+      for($i=0;$i<sizeof($custInfo);++$i){
+        $custInfo[$i]["content"]  = $customer->toString($custInfo[$i]);
+        $custInfo[$i]["pkid"]     = $custInfo[$i]["id"];
+      }
 			if(sizeof($custInfo)>0){
 				$this->assign("customerList",$custInfo);
 			}
