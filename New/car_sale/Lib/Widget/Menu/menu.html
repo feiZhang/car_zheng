@@ -1,0 +1,11 @@
+<div class="accordion">
+<ul class="nav nav-pills nav-stacked">
+    <volist name="menu_list" id="menu">
+    <li id="one" class="files" style="">
+        <a href="__APP__/{$menu.module_name}/{$menu.action_name}/{$menu.args}" target="_self">
+            {$menu.menu_name}
+        </a>
+    </li>
+    </volist>
+</ul>
+</div>

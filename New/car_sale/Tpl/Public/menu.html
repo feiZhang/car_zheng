@@ -1,0 +1,39 @@
+<div class="navbar-inverse" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="/" class="navbar-brand">{$Think.config.SysSetting.SITE_SMALL_NAME}</a>
+        </div>
+            <div class="ollapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/Customer">客户管理</a></li>
+                    <li class=""><a href="/User">员工管理</a></li>
+                    <li class=""><a href="/Commodity">商品管理</a></li>
+                    <li class=""><a href="__ROOT__/UserBuyCommodity">销售明细</a></li>
+                    <li class=""><a href="/CustomerSavedCommodity">商品寄存</a></li>
+
+                    <?php
+                    if(empty($_SESSION[C("USER_AUTH_KEY")])){
+                        printf('<li class=""><a href="/Public/login">登录</a></li>');
+                    }else{
+                        $m    = C("USER_AUTH_MODEL");
+                        printf('<li class=""><a href="/Public/logout">退出%s</a></li>',$_SESSION[$m["nick_name"]]);
+                    }
+                    ?>
+                    <li class=""><a href="__ROOT__/Basic/backDB">数据备份</a></li>
+                    <li class=""><a href="/Help">帮助</a></li>
+                    <li class=""><a href="/about.html">关于</a></li>
+                </ul>
+            </div>
+    </div>
+</div>
+<script>
+function backDbFile(){
+    var d = new Date()
+    if(d.getMinutes()=="8"){
+        $.get(APP_ROOT+"/Basic/backDB");
+    }else{
+        setTimeout(backDbFile,60);
+    }
+}
+setTimeout(backDbFile,60);
+</script>
