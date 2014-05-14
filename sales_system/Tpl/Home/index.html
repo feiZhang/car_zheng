@@ -3,63 +3,63 @@
 
 <script>
 $(function(){
-	$("#inputCardNo").focus();
-	//消费
+    $("#inputCardNo").focus();
+    //消费
   $("#cardExpense").click(function(){
     saleCommodity($("#inputCardNo").val());
   });
-	
+    
   $("#cardTopUp").click(function(){
     cardTopUp($("#inputCardNo").val());
-	});
-	$("#cardSell").click(function(){
-		$.dialog({
-			title:"售卡",
-			lock:true,
-			ok:function(){
-				var re  = true;
-		        if($("#input_card_no").val()==0){
-		            $.dialog({title:"提醒",content:"请填写卡号!",time:3000});
-		            $("#input_card_no").focus();
-		            return false;
-		        }
+    });
+    $("#cardSell").click(function(){
+        $.dialog({
+            title:"售卡",
+            lock:true,
+            ok:function(){
+                var re  = true;
+                if($("#input_card_no").val()==0){
+                    $.dialog({title:"提醒",content:"请填写卡号!",time:3000});
+                    $("#input_card_no").focus();
+                    return false;
+                }
 
                 $.dialog({
                     id:"cardSellResult",title:"售卡结果",content:"正在处理中!<img src='__PUBLIC__/public/loading.gif' />"
                 });
                 
-				$.ajax({
-				   type: "POST",
-				   url: "__ROOT__/Card/save_salecard",
-				   data: $("#saleCardForm").serialize(),
-				   success: function(msg){
-					   $.dialog.get('cardSellResult').content(msg["info"]);
-					   $.dialog.get('cardSellResult').time(3000);
-					   
+                $.ajax({
+                   type: "POST",
+                   url: "__ROOT__/Card/save_salecard",
+                   data: $("#saleCardForm").serialize(),
+                   success: function(msg){
+                       $.dialog.get('cardSellResult').content(msg["info"]);
+                       $.dialog.get('cardSellResult').time(3000);
+                       
                        if(msg["status"]==0){
-                    	   re = false;
+                           re = false;
                        }else{
-                    	   $("#inputCardNo").val(msg["data"]);
+                           $("#inputCardNo").val(msg["data"]);
                        }
-				   },
-				   dataType:"json"
-				});
-				return re;
-			},
-			okValue:"确定售卡",
-			cancelValue:"取消",
-			cancel:function(){},
-			initialize:function(){
-					var _this	= this;
-					$.get("__ROOT__/Card/sale_card/card_no/" + $("#inputCardNo").val(),function(html){
-						_this.content(html);
-					});
-				}
-			});
-	});
-	
-	/**
-	商品寄存
+                   },
+                   dataType:"json"
+                });
+                return re;
+            },
+            okValue:"确定售卡",
+            cancelValue:"取消",
+            cancel:function(){},
+            initialize:function(){
+                    var _this   = this;
+                    $.get("__ROOT__/Card/sale_card/card_no/" + $("#inputCardNo").val(),function(html){
+                        _this.content(html);
+                    });
+                }
+            });
+    });
+    
+    /**
+    商品寄存
     $("#saveCommodity").click(function(){
         if($("#inputCardNo").val()==0){
             $.dialog({title:"提醒",content:"充值必须有卡号",time:3000});
@@ -77,25 +77,25 @@ $(function(){
                 }
             });
     });
-	**/
-	//追加无卡消费操作界面   追加此页面后，与弹出页面的form重复，导致冲突，所以关闭
+    **/
+    //追加无卡消费操作界面   追加此页面后，与弹出页面的form重复，导致冲突，所以关闭
 /*     $.get("__ROOT__/Card/card_select/type/sale/card_no/",function(html){
-    	$("#noCardExpense").html(html);
+        $("#noCardExpense").html(html);
     });
  */
 });
 </script>
 <div class="container" style="margin-top:5px;">
-	<form class="form-inline">
-		<label>输入卡号或车牌号或电话号码:</label>
-		<div class="input-append">
-			<input id="inputCardNo" type="text" placeholder="请输入卡号或车牌号或手机号" />
-			<button id="cardExpense" class="btn" type="button">消费</button>
-			<button id="cardTopUp" class="btn" type="button">充值</button>
-			<button id="cardSell" class="btn" type="button">售卡</button>
-			<!--  input id="saveCommodity" type="button" class="d-button d-state-highlight" value="寄存" \ >  -->
-		</div>
-	</form>
+    <form class="form-inline">
+        <label>输入卡号或车牌号或电话号码:</label>
+        <div class="input-append">
+            <input id="inputCardNo" type="text" placeholder="请输入卡号或车牌号或手机号" />
+            <button id="cardExpense" class="btn" type="button">消费</button>
+            <button id="cardTopUp" class="btn" type="button">充值</button>
+            <button id="cardSell" class="btn" type="button">售卡</button>
+            <!--  input id="saveCommodity" type="button" class="d-button d-state-highlight" value="寄存" \ >  -->
+        </div>
+    </form>
 </div>
 
 <div class="container" id="home_content">
@@ -107,13 +107,13 @@ $(function(){
     <div class="title-bar">
         无卡快捷消费
     </div>
-	<div id="noCardExpense">
-	    
-	</div>
-	<div>
-	    <input type="button" value="提交销售" class="d-button d-state-highlight" onclick="submitSaleInfo();">
-	    <input type="button" value="重置销售信息" class="d-button" onclick="javascript:document.getElementById('saleCommodityForm').reset();">
-	</div>
+    <div id="noCardExpense">
+        
+    </div>
+    <div>
+        <input type="button" value="提交销售" class="d-button d-state-highlight" onclick="submitSaleInfo();">
+        <input type="button" value="重置销售信息" class="d-button" onclick="javascript:document.getElementById('saleCommodityForm').reset();">
+    </div>
 </div>
 -->
 

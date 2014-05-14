@@ -10,17 +10,17 @@
  *
  * See http://code.google.com/p/minify/wiki/CustomSource for other ideas
  **/
-$groupBasePath		= "//DxInfo/DxWebRoot";
+$groupBasePath	  = "//car/DxInfo/DxWebRoot";
 $projectPath      = dirname(__FILE__);
 $projectPath      = substr($projectPath,0,-3)."Public/";
 return array(
     'headerCss' => array(
         $groupBasePath."/public/bootstrap/css/bootstrap.css",
         $groupBasePath."/public/bootstrap/css/bootstrap-responsive.css",
-       	$groupBasePath."/basic/css/default.css",
+        $groupBasePath."/basic/css/default.css",
     ),
     'projectHeaderCss' => array(
-      $projectPath."css/default.css",
+        $projectPath."css/default.css",
     ),
     'headerJs' => array(
         $groupBasePath."/public/Jquery/jquery-1.8.2.js",

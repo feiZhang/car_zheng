@@ -1,30 +1,42 @@
 <div class="navbar navbar-inverse navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">
-			<button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
-				<span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
-			</button>
-			<a href="/" class="brand">{$Think.config.SysSet.SITE_SMALL_NAME}</a>
-			<div class="nav-collapse collapse">
-				<ul class="nav">
-					<li class="active"><a href="__ROOT__/Customer">客户管理</a></li>
-					<li class=""><a href="__ROOT__/User">员工管理</a></li>
-					<li class=""><a href="__ROOT__/Commodity">商品管理</a></li>
-					<li class=""><a href="__ROOT__/UserBuyCommodity">销售明细</a></li>
-					<li class=""><a href="__ROOT__/CustomerSavedCommodity">商品寄存</a></li>
+    <div class="navbar-inner">
+        <div class="container">
+            <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+                <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="brand">{$Think.config.SysSet.SITE_SMALL_NAME}</a>
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="__ROOT__/Customer">客户管理</a></li>
+                    <li class=""><a href="__ROOT__/User">员工管理</a></li>
+                    <li class=""><a href="__ROOT__/Commodity">商品管理</a></li>
+                    <li class=""><a href="__ROOT__/New/www/UserBuyCommodity">销售明细</a></li>
+                    <li class=""><a href="__ROOT__/CustomerSavedCommodity">商品寄存</a></li>
 
-					<?php
-					if(empty($_SESSION[C("USER_AUTH_KEY")])){
-						printf('<li class=""><a href="__ROOT__/Public/login">登录</a></li>');
-					}else{
-						$m    = C("USER_AUTH_MODEL");
-						printf('<li class=""><a href="__ROOT__/Public/logout">退出%s</a></li>',$_SESSION[$m["nick_name"]]);
-					}
-					?>
-					<li class=""><a href="__ROOT__/Help">帮助</a></li>
-					<li class=""><a href="__ROOT__/about.html">关于</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
+                    <?php
+                    if(empty($_SESSION[C("USER_AUTH_KEY")])){
+                        printf('<li class=""><a href="__ROOT__/Public/login">登录</a></li>');
+                    }else{
+                        $m    = C("USER_AUTH_MODEL");
+                        printf('<li class=""><a href="__ROOT__/Public/logout">退出%s</a></li>',$_SESSION[$m["nick_name"]]);
+                    }
+                    ?>
+                    <li class=""><a href="__ROOT__/New/www/Basic/backDB">数据备份</a></li>
+                    <li class=""><a href="__ROOT__/Help">帮助</a></li>
+                    <li class=""><a href="__ROOT__/about.html">关于</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
 </div>
+<script>
+function backDbFile(){
+    var d = new Date()
+    if(d.getMinutes()=="8"){
+        $.get(APP_ROOT+"/Basic/backDB");
+    }else{
+        setTimeout(backDbFile,60);
+    }
+}
+setTimeout(backDbFile,60);
+</script>
